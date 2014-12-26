@@ -27,7 +27,7 @@
 # Add "GITHash" as a key to your app's info plist to compile.
 # Reference the property list with the "GITHash" key to obtain the git hash value.
 
-INFOPLISTPATH="${TARGET_BUILD_DIR}/${EXECUTABLE_NAME}.app/Info.plist"
+: ${INFOPLIST_FILE:?"Need INFOPLIST_FILE to be non-empty"}
 
 # Location of PlistBuddy
 PLISTBUDDY="/usr/libexec/PlistBuddy"
@@ -36,7 +36,7 @@ PLISTBUDDY="/usr/libexec/PlistBuddy"
 GITREVSHA=$(git --git-dir="${PROJECT_DIR}/.git" --work-tree="${PROJECT_DIR}" rev-parse --short HEAD)
 
 echo "GIT SHA = ${GITREVSHA}"
-echo "INFOPLISTPATH = ${INFOPLISTPATH}"
+echo "INFOPLISTPATH = ${INFOPLIST_FILE}"
 
 # Set the Git hash in the info plist for reference
-$PLISTBUDDY -c "Set :GITHash $GITREVSHA" "${INFOPLISTPATH}"
+$PLISTBUDDY -c "Set :GITHash $GITREVSHA" "${INFOPLIST_FILE}"
